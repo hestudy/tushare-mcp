@@ -39,3 +39,8 @@ jobs:
         run: |
           source .venv/bin/activate
           pytest
+
+      - name: Security checks
+        run: |
+          source .venv/bin/activate
+          python -c "import shared.config.settings as s; assert s.AppSettings().api_key is None, 'API key should not be hardcoded'"

@@ -2,7 +2,7 @@ from datetime import datetime, timezone
 from typing import TypedDict
 from uuid import uuid4
 
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI
 
 
 class HealthDependencies(TypedDict):
@@ -20,9 +20,16 @@ class HealthResponse(TypedDict):
 
 
 def create_app() -> FastAPI:
+    from service.app.security import require_api_key
+
     app = FastAPI(title="tushare-mcp", version="0.1.0")
 
-    @app.get("/health", response_model=HealthResponse, tags=["health"])
+    @app.get(
+        "/health",
+        response_model=HealthResponse,
+        tags=["health"],
+        dependencies=[Depends(require_api_key)],
+    )
     async def health() -> HealthResponse:
         timestamp = datetime.now(tz=timezone.utc).isoformat()
         return {

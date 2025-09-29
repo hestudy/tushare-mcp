@@ -15,6 +15,8 @@ class AppSettings(BaseSettings):
 
     environment: str = "development"
     tushare_token: Optional[str] = None
+    api_key: Optional[str] = None
+    rate_limit_per_minute: Optional[int] = 60
 
     model_config = SettingsConfigDict(
         env_prefix="MCP_",
@@ -35,3 +37,9 @@ def get_tushare_token() -> Optional[str]:
     """提供 tushare Token 读取钩子，若未配置则返回 None。"""
 
     return get_settings().tushare_token
+
+
+def reset_settings_cache() -> None:
+    """清空设置缓存，便于测试在修改环境变量后重新加载。"""
+
+    get_settings.cache_clear()
