@@ -43,7 +43,6 @@ ignore = ["E203", "E266", "E501"]
 
 [tool.ruff.lint.isort]
 known-first-party = ["service", "shared", "metadata", "mcp_commands"]
-profile = "black"
 
 [tool.pytest.ini_options]
 minversion = "8.3"
