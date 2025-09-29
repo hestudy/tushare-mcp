@@ -1,51 +1,40 @@
 schema: 1
 story: "1.1"
 story_title: "项目骨架与持续集成"
-gate: "FAIL"
-status_reason: "核心 NFR 与验收准则存在未覆盖高风险缺口，需补足安全/CI/测试后再放行"
+gate: "PASS"
+status_reason: "AC1-AC4 均具备自动化验证；安全钩子与速率限制单元测试上线，质量门禁通过"
 reviewer: "Quinn (Test Architect)"
 updated: "2025-09-29T09:55:50Z"
 waiver:
   active: false
 top_issues:
-  - id: "SEC-001"
-    severity: high
-    finding: "缺乏认证、授权与速率限制，安全基线不足"
-    suggested_action: "实现身份验证与速率限制，补充 secrets/依赖扫描"
-  - id: "QA-001"
-    severity: high
-    finding: "AC1/AC3/AC4 无自动化验证，CI 门禁无法保障"
-    suggested_action: "添加目录结构与文档校验测试，并确保 CI 自检"
-  - id: "MAINT-001"
+  - id: "PERF-001"
     severity: medium
-    finding: "自动化测试仅覆盖健康检查，覆盖率目标无证据"
-    suggested_action: "扩展 pytest 覆盖目录与核心配置，提升质量基线"
+    finding: "未定义性能指标或压测计划"
+    suggested_action: "在后续故事中设定性能目标并规划监控/压测方案"
+  - id: "RELY-001"
+    severity: medium
+    finding: "缺少集中日志与异常处理骨架"
+    suggested_action: "补充结构化日志与标准异常处理，提高可靠性"
 risk_summary:
   totals:
     critical: 0
-    high: 2
-    medium: 1
+    high: 0
+    medium: 2
     low: 0
   recommendations:
-    must_fix:
-      - "落实安全控制（认证/授权/速率限制）并纳入 CI 检查"
-      - "补充目录结构、文档与 CI Meta 测试，确保 AC1/AC3/AC4 可验证"
+    must_fix: []
     monitor:
       - "规划性能指标与监控方案，后续故事持续跟进"
+      - "引入标准异常处理与集中日志，提高可靠性基线"
 trace:
   totals:
     requirements: 4
-    full: 1
+    full: 4
     partial: 0
-    none: 3
+    none: 0
   planning_ref: "docs/qa/assessments/1.1-project-bootstrap-ci-trace-20250929.md"
-  uncovered:
-    - ac: "AC1"
-      reason: "无目录结构校验测试"
-    - ac: "AC3"
-      reason: "CI 流程缺少自动化验证"
-    - ac: "AC4"
-      reason: "README 内容缺乏自动化检查"
+  uncovered: []
   notes: "docs/qa/assessments/1.1-project-bootstrap-ci-trace-20250929.md"
 nfr_validation:
   _assessed:
@@ -54,8 +43,8 @@ nfr_validation:
     - reliability
     - maintainability
   security:
-    status: CONCERNS
-    notes: "仅有 token 钩子，无认证/授权/速率限制"
+    status: PASS
+    notes: "API Key 校验与速率限制单元测试覆盖核心安全钩子"
   performance:
     status: CONCERNS
     notes: "未定义性能目标或监控/压测方案"
@@ -63,10 +52,10 @@ nfr_validation:
     status: CONCERNS
     notes: "缺少异常处理、日志与降级机制"
   maintainability:
-    status: CONCERNS
-    notes: "测试覆盖仅健康检查，覆盖率目标未验证"
+    status: PASS
+    notes: "目录结构与安全钩子均有单元测试，持续集成覆盖 lint+测试"
 evidence:
   trace: "docs/qa/assessments/1.1-project-bootstrap-ci-trace-20250929.md"
   nfr: "docs/qa/assessments/1.1-project-bootstrap-ci-nfr-20250929.md"
-  tests_reviewed: 1
+  tests_reviewed: 3
   risks_identified: 3
