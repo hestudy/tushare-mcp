@@ -9,7 +9,6 @@ import secrets
 import time
 from collections import deque
 from threading import Lock
-from typing import Deque, Optional
 
 from fastapi import HTTPException, Security
 from fastapi.security.api_key import APIKeyHeader
@@ -24,7 +23,7 @@ class RateLimiter:
 
     def __init__(self) -> None:
         self._lock = Lock()
-        self._requests: Deque[float] = deque()
+        self._requests: deque[float] = deque()
 
     def allow(self, limit: int, window_seconds: int = 60) -> bool:
         """当窗口内请求数未超过限制时返回 True。"""
@@ -50,7 +49,7 @@ class RateLimiter:
 _rate_limiter = RateLimiter()
 
 
-async def require_api_key(api_key: Optional[str] = Security(_API_KEY_HEADER)) -> None:
+async def require_api_key(api_key: str | None = Security(_API_KEY_HEADER)) -> None:
     """校验请求头中的 API Key，并应用速率限制。"""
 
     settings = get_settings()

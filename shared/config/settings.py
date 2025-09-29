@@ -5,7 +5,6 @@
 """
 
 from functools import lru_cache
-from typing import Optional
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -14,9 +13,9 @@ class AppSettings(BaseSettings):
     """项目通用配置。"""
 
     environment: str = "development"
-    tushare_token: Optional[str] = None
-    api_key: Optional[str] = None
-    rate_limit_per_minute: Optional[int] = 60
+    tushare_token: str | None = None
+    api_key: str | None = None
+    rate_limit_per_minute: int | None = 60
 
     model_config = SettingsConfigDict(
         env_prefix="MCP_",
@@ -33,7 +32,7 @@ def get_settings() -> AppSettings:
     return AppSettings()
 
 
-def get_tushare_token() -> Optional[str]:
+def get_tushare_token() -> str | None:
     """提供 tushare Token 读取钩子，若未配置则返回 None。"""
 
     return get_settings().tushare_token

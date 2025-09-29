@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import datetime
 from typing import TypedDict
 from uuid import uuid4
 
@@ -31,7 +31,7 @@ def create_app() -> FastAPI:
         dependencies=[Depends(require_api_key)],
     )
     async def health() -> HealthResponse:
-        timestamp = datetime.now(tz=timezone.utc).isoformat()
+        timestamp = datetime.now(tz=datetime.UTC).isoformat()
         return {
             "status": "OK",
             "service": "tushare-mcp",

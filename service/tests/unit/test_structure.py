@@ -16,7 +16,8 @@ def test_required_directories_exist() -> None:
 
     for directory in expected_directories:
         path = ROOT / directory
-        assert path.exists() and path.is_dir(), f"Missing required directory: {directory}"
+        if not (path.exists() and path.is_dir()):
+            raise AssertionError(f"Missing required directory: {directory}")
 
 
 def test_required_files_exist() -> None:
@@ -24,4 +25,5 @@ def test_required_files_exist() -> None:
 
     for file_name in expected_files:
         path = ROOT / file_name
-        assert path.exists(), f"Missing required file: {file_name}"
+        if not path.exists():
+            raise AssertionError(f"Missing required file: {file_name}")
