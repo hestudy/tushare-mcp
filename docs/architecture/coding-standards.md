@@ -1,0 +1,11 @@
+# Coding Standards
+- **Languages & Runtimes:** Python 3.11.8，uvicorn 0.30 + gunicorn 22.0，pytest 8.3。
+- **Style & Linting:** 使用 `ruff` 与 `black`；CI 必须通过 `make lint`。
+- **Test Organization:** `service/tests/unit/`, `service/tests/integration/`, 顶层 `tests/` 保存端到端脚本。
+- **命名约定：** 模块/包 `snake_case`、类 `PascalCase`、函数变量 `snake_case`、常量 `UPPER_SNAKE`。
+- **关键规则：**
+  - **API 响应标准化：** 所有路由返回统一响应结构。
+  - **禁止明文凭证：** 日志/配置/测试不可包含 Token 明文。
+  - **请求 ID 贯穿：** 缺失视为阻塞问题。
+  - **限频包装：** 必须通过 Adapter 调用 tushare。
+  - **文档同步：** 更新指令后运行文档同步脚本，保持 CLI 与文档一致。
